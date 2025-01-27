@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Elige tu película favorita</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css">
+</head>
+<body>
+<div class="container mt-4">
+  <h1 class="text-center mb-4">Elige tu película favorita</h1>
+  <div class="row justify-content-center">
+
+    <div th:each="movie : ${movies}" class="col-12 col-md-4 movie-card">
+      <form th:action="@{/like}" method="post">
+        <input type="hidden" th:value="${movie.id}" name="id">
+        <button type="submit" style="border: none; background: none; padding: 0;">
+          <img th:src="@{/img/{img}(img=${movie.img})}" th:alt="${movie}">
+        </button>
+      </form>
+      <p><span th:text="${movie.lik}"></span></p>
+    </div>
+  </div>
+</div>
+</body>
+</html>
