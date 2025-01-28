@@ -8,18 +8,26 @@
 <body>
 <div class="container mt-4">
   <h1 class="text-center mb-4">Elige tu película favorita</h1>
-  <div class="row justify-content-center">
 
-    <div th:each="movie : ${movies}" class="col-12 col-md-4 movie-card">
-      <form th:action="@{/like}" method="post">
-        <input type="hidden" th:value="${movie.id}" name="id">
-        <button type="submit" style="border: none; background: none; padding: 0;">
-          <img th:src="@{/img/{img}(img=${movie.img})}" th:alt="${movie}">
-        </button>
-      </form>
-      <p><span th:text="${movie.lik}"></span></p>
+  <form th:action="@{/sumarVoto}" method="post">
+    <div class="row justify-content-center">
+
+      <div th:each="pelicula : ${peliculas}" class="col-12 col-md-4 text-center">
+        <label>
+          <input type="radio" name="id" th:value="${pelicula.id}" class="form-check-input">
+          <img th:src="${pelicula.url}" th:alt="${pelicula}" class="img-fluid d-block mx-auto">
+        </label>
+        <p class="mt-2"><span th:text="${pelicula.url}"></span></p>
+      </div>
+
     </div>
-  </div>
+
+    <!-- Botón para enviar el formulario -->
+    <div class="text-center mt-4">
+      <button type="submit" class="btn btn-primary">Votar</button>
+    </div>
+  </form>
+
 </div>
 </body>
 </html>

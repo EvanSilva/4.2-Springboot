@@ -1,6 +1,8 @@
 package edu.badpals.peliculas.controller;
 
 import edu.badpals.peliculas.model.Pelicula;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -10,33 +12,37 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PeliculaController implements WebMvcConfigurer {
+@Controller
+public class PeliculaController {
 
-    private final List<Pelicula> peliculas = new ArrayList<>();
+    @Autowired
+    private edu.badpals.peliculas.repository.PeliculaRepository peliculaRepository;
+
 
     public void MovieController() {
-
-        peliculas.add(new Pelicula("https://i.ebayimg.com/images/g/6RcAAOSwTPdnLrTA/s-l1600.webp"));
-        peliculas.add(new Pelicula("https://i.ebayimg.com/images/g/6RcAAOSwTPdnLrTA/s-l1600.webp"));
-        peliculas.add(new Pelicula("https://i.ebayimg.com/images/g/6RcAAOSwTPdnLrTA/s-l1600.webp"));
 
 
     }
 
     @RequestMapping("/peliculas")
     public String enseñarPelicula(Model model) {
+
+        List<Pelicula> peliculas = peliculaRepository.findAll();
+
+        peliculas.add(new Pelicula("https://lumiere-a.akamaihd.net/v1/images/image_51013278.jpeg"));
+        peliculas.add(new Pelicula("https://lumiere-a.akamaihd.net/v1/images/image_51013278.jpeg"));
+        peliculas.add(new Pelicula("https://lumiere-a.akamaihd.net/v1/images/image_51013278.jpeg"));
+
         model.addAttribute("peliculas", peliculas);
         return "peliculas";
     }
 
     @PostMapping("/sumarVoto")
-
-    public String añadirLike(@RequestParam("id") int id) {
-        for (Pelicula pelicula : peliculas) {
-            if (pelicula.getId() == id) {
-                pelicula.sumarLike();
-                break;
-            }
+    public String añadirLike(@RequestParam("id") long id) {
+        Pelicula pelicula = peliculaRepository.findById(id).orElse(null);
+        if (pelicula != null) {
+            pelicula.sumarLike();
+            peliculaRepository.save(pelicula);
         }
         return "redirect:/peliculas";
     }
