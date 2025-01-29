@@ -1,62 +1,75 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-  <meta charset="UTF-8">
-  <title>Elige tu película favorita</title>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css">
-  <style>
-    .pelicula-container {
-      margin-bottom: 20px;
-      padding: 15px;
-      border-radius: 10px;
-      background-color: #f8f9fa;
-    }
-    .pelicula-container img {
-      border-radius: 10px;
-      height: 600px;
-    }
-    .form-check {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      margin-top: 10px;
-    }
-    .form-check label {
-      margin-left: 8px;
-      cursor: pointer;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <title>Elige tu película favorita</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css">
+    <style>
+        .pelicula-container {
+            margin-bottom: 20px;
+            padding: 15px;
+            border-radius: 10px;
+            background-color: #f8f9fa;
+        }
+
+        .pelicula-container img {
+            border-radius: 10px;
+            height: 600px;
+        }
+
+        .form-check {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-top: 10px;
+        }
+
+        .form-check label {
+            margin-left: 8px;
+            cursor: pointer;
+        }
+
+        .alert-message {
+            margin-top: 10px;
+            color: red;
+            font-weight: bold;
+        }
+    </style>
 </head>
 <body>
 <div class="container mt-4">
-  <h1 class="text-center mb-4">Elige tu película favorita</h1>
+    <h1 class="text-center mb-4">Elige tu película favorita</h1>
 
-  <form th:action="@{/sumarVoto}" method="post">
-    <div class="row justify-content-center">
+    <form th:action="@{/sumarVoto}" method="post">
+        <div class="row justify-content-center">
 
-      <div th:each="pelicula : ${peliculas}" class="col-12 col-md-4 text-center pelicula-container">
-        <img th:src="${pelicula.url}" class="img-fluid d-block mx-auto mb-2">
+            <div th:each="pelicula : ${peliculas}" class="col-12 col-md-4 text-center pelicula-container">
+                <img th:src="${pelicula.url}" class="img-fluid d-block mx-auto mb-2">
 
-        <!-- Mostrar votos encima del radio -->
-        <p><strong>Votos: </strong><span th:text="${pelicula.likes}"></span></p>
+                <p><strong>Votos: </strong><span th:text="${pelicula.likes}"></span></p>
 
-        <div class="form-check">
-          <input type="radio" name="id" th:value="${pelicula.id}" class="form-check-input">
-          <label th:for="${pelicula.id}">Votar</label>
+                <div class="form-check">
+                    <input type="radio" name="id" th:value="${pelicula.id}" class="form-check-input">
+                    <label th:for="${pelicula.id}">Votar</label>
+                </div>
+            </div>
+
         </div>
-      </div>
 
-    </div>
+        <div class="mb-3 text-center">
+            <label for="email" class="form-label">Introduce tu correo Gmail:</label>
+            <input type="email" id="email" name="email" class="form-control w-50 mx-auto"
+                   placeholder="tuemail@gmail.com" required>
+        </div>
 
-    <div class="mb-3 text-center">
-      <label for="email" class="form-label">Introduce tu correo Gmail:</label>
-      <input type="email" id="email" name="email" class="form-control w-50 mx-auto" placeholder="tuemail@gmail.com" required>
-    </div>
+        <div th:if="${mensaje}" class="alert alert-danger alert-message" role="alert">
+            <p th:text="${mensaje}"></p>
+        </div>
 
-    <div class="text-center mt-4">
-      <button type="submit" class="btn btn-primary">Votar</button>
-    </div>
-  </form>
+        <div class="text-center mt-4">
+            <button type="submit" class="btn btn-primary">Votar</button>
+        </div>
+    </form>
 
 </div>
 </body>

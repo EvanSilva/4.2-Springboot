@@ -9,7 +9,6 @@ import lombok.*;
 
 @Setter
 @AllArgsConstructor
-@NoArgsConstructor
 @EqualsAndHashCode
 @ToString
 @Entity
@@ -20,6 +19,13 @@ public class Voto {
     private long id;
 
     private String email;
+
+    public Voto() {
+    }
+
+    public Voto(String email) {
+        this.email = email;
+    }
 
     public long getId() {
         return id;

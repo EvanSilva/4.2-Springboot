@@ -9,7 +9,6 @@ import lombok.*;
 
 @Setter
 @AllArgsConstructor
-@NoArgsConstructor
 @EqualsAndHashCode
 @ToString
 @Entity
@@ -29,6 +28,9 @@ public class Pelicula {
 
     public void sumarLike() {
         likes++;
+    }
+
+    public Pelicula() {
     }
 
     public long getId() {
