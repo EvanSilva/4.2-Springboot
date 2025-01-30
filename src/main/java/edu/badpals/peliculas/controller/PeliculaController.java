@@ -41,6 +41,7 @@ public class PeliculaController {
             for (Pelicula pelicula : peliculas) {
                 peliculaRepository.save(pelicula);
             }
+
         }
 
         model.addAttribute("peliculas", peliculaRepository.findAll());
@@ -64,6 +65,8 @@ public class PeliculaController {
                 return "redirect:/peliculas";
             }
         }
+
+        
 
         peliculaRepository.findById(id).ifPresent(pelicula -> {
             pelicula.sumarLike();
