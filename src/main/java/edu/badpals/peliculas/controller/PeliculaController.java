@@ -14,6 +14,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 public class PeliculaController {
@@ -58,11 +59,11 @@ public class PeliculaController {
         List<Voto> todosLosVotos = votoRepository.findAll();
 
         for (Voto voto : todosLosVotos) {
-            if (voto.getEmail().equals(email)) {
-                System.out.println("Detecta el voto repetido");
+            if (votoRepository.findByEmail(voto.getEmail()) != null ) {
 
                 redirectAttributes.addFlashAttribute("mensaje", "Ya has votado con este correo.");
                 return "redirect:/peliculas";
+
             }
         }
 
